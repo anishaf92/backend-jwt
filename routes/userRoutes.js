@@ -12,32 +12,22 @@ router.post('/signUp',(req,res) => {
     .catch((err) => res.send(err))
     
 })
-router.get('/login',(req,res) =>{
+router.post('/login',(req,res) =>{
     const {email,password} = req.body;
     User.find({email})
     .then((data) => {
         if(data[0].password === password){
-            const token = jwt.sign({email,password},process.env.secret_key,{expiresIn:"1h"})
-            res.send(token)
+            //const token = jwt.sign({email,password},process.env.secret_key,{expiresIn:"1h"})
+            res.json({"login":"true"})
         }
     })
     .catch(err => console.log(err))
 })
 router.get('/getUsers',(req,res) => {
-    const {token} = req.body
-    console.log(token)
-   
-    jwt.verify(token,process.env.secret_key, (err,decoded) => {
-        if(err){
-            res.send("Invalid Token")
-        }
-        else{
-            console.log(decoded)
             User.find()
             .then((data) => res.json(data))
             .catch((err) => res.send(err))
-        }
-    })
+      
    
 })
 router.put('/editUser/:id',(req,res) => {

@@ -13,6 +13,7 @@ mongoose.connect(process.env.mongo_url)
 app.use(express.json());
 app.use('/user', userRoutes);
 
+
 app.listen(process.env.port, (err) => {
   if (!err) {
     console.log('Server is connected to port no ', process.env.port);
